@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BRY Landscaping LLC | Northeast Ohio</title>
+<meta name="description" content="BRY Landscaping LLC – Professional lawn care in Northeast Ohio. Mowing, seeding, mulching, weed control, landscape design & garden work. 5-star rated. Call (440) 570-9878." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ─── RESET ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: 'Inter', sans-serif; background: #fff; color: #1a1a1a; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ─── TOKENS ─── */
+:root {
+  --green:      #2d7a3a;
+  --green-mid:  #3a9e4a;
+  --green-light:#e8f5ea;
+  --green-pale: #f0f9f1;
+  --dark:       #1a1a1a;
+  --dark2:      #111;
+  --gray:       #6b7280;
+  --gray-light: #f9fafb;
+  --white:      #ffffff;
+  --gold:       #f59e0b;
+  --radius-sm:  8px;
+  --radius-md:  14px;
+  --radius-lg:  22px;
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:  0 4px 20px rgba(0,0,0,.10);
+  --shadow-lg:  0 12px 40px rgba(0,0,0,.14);
+  --transition: 0.28s cubic-bezier(.4,0,.2,1);
+}
+
+/* ─── NAV ─── */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  display: flex; align-items: center;
+  padding: 0 5%;
+  height: 68px;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  transition: background var(--transition), box-shadow var(--transition);
+}
+#navbar.scrolled {
+  background: rgba(255,255,255,0.97);
+  box-shadow: 0 1px 0 rgba(0,0,0,.06), 0 4px 24px rgba(0,0,0,.06);
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 11px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.08rem; font-weight: 700;
+  color: var(--dark); letter-spacing: -.01em;
+  white-space: nowrap; text-decoration: none;
+}
+.nav-logo-icon {
+  width: 32px; height: 32px;
+  background: var(--green);
+  border-radius: 50% 4px 50% 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.nav-logo-text { color: var(--dark); }
+.nav-logo-sep { color: rgba(0,0,0,.2); margin: 0 2px; font-weight: 300; }
+
+/* hide old nav clutter — none needed */
+.nav-links, .nav-cta, .hamburger { display: none !important; }
+.mobile-menu { display: none !important; }
+
+/* ─── HERO ─── */
+.hero {
+  position: relative; min-height: 100svh;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; text-align: center;
+  padding: 110px 6% 80px;
+}
+
+/* Video-like background — pure CSS layered gradients */
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.55) 0%, rgba(0,0,0,.30) 50%, rgba(0,0,0,.60) 100%),
+    linear-gradient(135deg, #0d2b14 0%, #1a4a24 35%, #0f3318 65%, #081a0e 100%);
+  animation: heroPan 18s ease-in-out infinite alternate;
+}
+@keyframes heroPan {
+  0%   { background-position: 0% 30%; }
+  100% { background-position: 100% 70%; }
+}
+
+/* Ambient texture dots */
+.hero-texture {
+  position: absolute; inset: 0; z-index: 1;
+  background-image:
+    radial-gradient(circle, rgba(45,122,58,.18) 1px, transparent 1px),
+    radial-gradient(circle, rgba(45,122,58,.10) 1px, transparent 1px);
+  background-size: 40px 40px, 80px 80px;
+  background-position: 0 0, 20px 20px;
+  animation: textureDrift 30s linear infinite;
+}
+@keyframes textureDrift {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(40px, 40px); }
+}
+
+/* Light sweep */
+.hero-sweep {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(105deg,
+    transparent 0%, transparent 40%,
+    rgba(45,122,58,.12) 55%,
+    transparent 70%, transparent 100%);
+  background-size: 300% 100%;
+  animation: sweep 9s ease-in-out infinite;
+}
+@keyframes sweep {
+  0%   { background-position: 200% 0; }
+  50%  { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Floating leaves / particles */
+.leaf-particles { position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+.lp {
+  position: absolute; bottom: -10%;
+  font-size: 1.2rem; opacity: 0;
+  animation: floatLeaf var(--dur) ease-in-out var(--del) infinite;
+}
+@keyframes floatLeaf {
+  0%   { opacity: 0; transform: translateY(0) rotate(0deg) scale(.6); }
+  10%  { opacity: .45; }
+  85%  { opacity: .2; }
+  100% { opacity: 0; transform: translateY(-95vh) rotate(360deg) scale(1.2); }
+}
+
+.hero-content { position: relative; z-index: 4; max-width: 800px; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.25);
+  backdrop-filter: blur(8px);
+  border-radius: 100px;
+  padding: 7px 18px;
+  font-size: .78rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.9);
+  margin-bottom: 28px;
+}
+.badge-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 7.5vw, 5.5rem);
+  font-weight: 900; line-height: 1.07;
+  color: #fff; letter-spacing: -.02em;
+  margin-bottom: 24px;
+}
+.hero h1 em { font-style: italic; color: #86efac; }
+
+.hero-sub {
+  font-size: clamp(.97rem, 2vw, 1.18rem);
+  color: rgba(255,255,255,.72);
+  line-height: 1.7; max-width: 560px;
+  margin: 0 auto 40px;
+}
+
+.hero-btns {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  justify-content: center; margin-bottom: 64px;
+}
+.btn-green {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green);
+  color: #fff; font-weight: 600; font-size: .97rem;
+  padding: 15px 32px; border-radius: 100px; border: none; cursor: pointer;
+  box-shadow: 0 4px 24px rgba(45,122,58,.55);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.btn-green:hover { background: var(--green-mid); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(45,122,58,.65); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.12);
+  color: #fff; font-weight: 500; font-size: .97rem;
+  padding: 14px 30px; border-radius: 100px;
+  border: 1.5px solid rgba(255,255,255,.35);
+  cursor: pointer; backdrop-filter: blur(6px);
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+.btn-ghost:hover { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.6); transform: translateY(-2px); }
+
+.scroll-hint {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: rgba(255,255,255,.45); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+}
+.scroll-mouse {
+  width: 22px; height: 36px; border: 1.5px solid rgba(255,255,255,.3);
+  border-radius: 11px; display: flex; justify-content: center; padding-top: 6px;
+}
+.scroll-dot {
+  width: 3px; height: 7px; background: #86efac; border-radius: 2px;
+  animation: scrollBob 1.7s ease-in-out infinite;
+}
+@keyframes scrollBob { 0%,100%{transform:translateY(0);opacity:1} 60%{transform:translateY(9px);opacity:.25} }
+
+/* ─── STATS BAR ─── */
+.stats-bar {
+  background: var(--green);
+  display: flex; flex-wrap: wrap;
+}
+.stat-item {
+  flex: 1 1 140px; padding: 28px 20px; text-align: center;
+  border-right: 1px solid rgba(255,255,255,.22);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  display: block; font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 700; color: #fff; line-height: 1; margin-bottom: 5px;
+}
+.stat-label {
+  font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: rgba(255,255,255,.78);
+}
+
+/* ─── SHARED SECTION STYLES ─── */
+.section { padding: 100px 6%; }
+.section-light { background: #fff; }
+.section-pale  { background: var(--green-pale); }
+.section-dark  { background: var(--dark2); color: #fff; }
+
+.eyebrow {
+  display: inline-block; font-size: .72rem; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 14px;
+}
+.section-dark .eyebrow { color: #86efac; }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 700; line-height: 1.15; margin-bottom: 16px;
+  color: var(--dark);
+}
+.section-dark .section-title { color: #fff; }
+
+.section-sub {
+  font-size: 1.02rem; color: var(--gray); line-height: 1.72;
+  max-width: 540px; margin-bottom: 60px;
+}
+.section-dark .section-sub { color: rgba(255,255,255,.58); }
+
+.section-header { max-width: 640px; }
+.centered { margin: 0 auto; text-align: center; }
+.centered .section-sub { margin-left: auto; margin-right: auto; }
+
+/* ─── SERVICES ─── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+}
+.service-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--radius-md);
+  padding: 36px 28px;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  position: relative; overflow: hidden;
+}
+.service-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--green); transform: scaleX(0); transform-origin: left;
+  transition: transform var(--transition);
+}
+.service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: #d1fae5; }
+.service-card:hover::after { transform: scaleX(1); }
+
+.svc-icon {
+  font-size: 2rem; margin-bottom: 18px; display: block;
+  animation: iconBob 3.5s ease-in-out infinite;
+}
+.service-card:nth-child(2) .svc-icon { animation-delay: .5s; }
+.service-card:nth-child(3) .svc-icon { animation-delay: 1s; }
+.service-card:nth-child(4) .svc-icon { animation-delay: 1.5s; }
+.service-card:nth-child(5) .svc-icon { animation-delay: .8s; }
+.service-card:nth-child(6) .svc-icon { animation-delay: 1.3s; }
+.service-card:nth-child(7) .svc-icon { animation-delay: .3s; }
+@keyframes iconBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+
+.service-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.12rem; font-weight: 600; color: var(--dark); margin-bottom: 10px;
+}
+.service-card p { font-size: .875rem; color: var(--gray); line-height: 1.68; }
+
+/* ─── WHY ─── */
+.why-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 24px;
+}
+.why-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: var(--radius-md);
+  padding: 44px 32px; text-align: center;
+  transition: transform var(--transition), border-color var(--transition), background var(--transition);
+}
+.why-card:hover { transform: translateY(-5px); border-color: rgba(134,239,172,.35); background: rgba(45,122,58,.12); }
+.why-icon-wrap {
+  width: 64px; height: 64px; margin: 0 auto 22px;
+  background: rgba(45,122,58,.18); border: 1px solid rgba(134,239,172,.3);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; font-family: 'Playfair Display', serif; font-weight: 700; color: #86efac;
+  transition: background var(--transition);
+}
+.why-card:hover .why-icon-wrap { background: rgba(45,122,58,.28); }
+.why-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; margin-bottom: 12px; }
+.why-card p  { font-size: .875rem; color: rgba(255,255,255,.55); line-height: 1.7; }
+
+/* ─── REVIEWS ─── */
+.reviews-track-wrap {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  margin: 0 -6%;
+  padding: 16px 0 24px;
+}
+.reviews-track {
+  display: flex; gap: 22px;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.reviews-track:hover { animation-play-state: paused; }
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.review-card {
+  background: #fff; border: 1px solid #e5e7eb;
+  border-radius: var(--radius-md); padding: 32px 28px;
+  width: 320px; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  transition: transform var(--transition), box-shadow var(--transition);
+  cursor: default;
+}
+.reviews-track:hover .review-card:hover {
+  transform: translateY(-5px); box-shadow: var(--shadow-lg);
+}
+
+.review-quote { font-size: 2.5rem; color: var(--green); line-height: 1; margin-bottom: 4px; font-family: 'Playfair Display', serif; }
+.review-stars { display: flex; gap: 3px; margin-bottom: 16px; }
+.star { color: var(--gold); font-size: 1rem; }
+.review-body { font-size: .9rem; color: #374151; line-height: 1.72; font-style: italic; flex: 1; margin-bottom: 22px; }
+.reviewer { display: flex; align-items: center; gap: 12px; padding-top: 18px; border-top: 1px solid #f3f4f6; }
+.reviewer-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--green); display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.reviewer-name  { font-size: .875rem; font-weight: 600; color: var(--dark); }
+.reviewer-badge { font-size: .75rem; color: var(--gray); margin-top: 1px; }
+.google-row {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 14px; padding-top: 14px; border-top: 1px solid #f3f4f6;
+  font-size: .75rem; color: var(--gray); font-weight: 500;
+}
+.g-circle {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: conic-gradient(#4285F4 0deg 90deg, #34A853 90deg 180deg, #FBBC05 180deg 270deg, #EA4335 270deg 360deg);
+  flex-shrink: 0;
+}
+
+/* ─── CONTACT ─── */
+.contact-wrap {
+  display: grid; grid-template-columns: 1fr 1.3fr; gap: 64px; align-items: start;
+}
+.contact-left h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; color: var(--dark);
+  margin-bottom: 16px;
+}
+.contact-left h2 em { font-style: italic; color: var(--green); }
+.contact-left p { font-size: .97rem; color: var(--gray); line-height: 1.75; margin-bottom: 36px; }
+
+.contact-detail-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+.cdr-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: var(--green-light); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+}
+.cdr-text strong { display: block; font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 3px; }
+.cdr-text span   { font-size: .95rem; color: var(--dark); }
+.cdr-text a      { color: var(--dark); transition: color var(--transition); }
+.cdr-text a:hover { color: var(--green); }
+
+/* Form */
+.contact-form-wrap {
+  background: var(--gray-light); border: 1px solid #e5e7eb;
+  border-radius: var(--radius-lg); padding: 44px 40px;
+}
+.form-title {
+  font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700;
+  color: var(--dark); margin-bottom: 6px;
+}
+.form-note-top { font-size: .82rem; color: var(--gray); margin-bottom: 28px; }
+
+.form-row  { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 18px; }
+.form-group label {
+  display: block; font-size: .75rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--gray); margin-bottom: 7px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%; padding: 13px 16px;
+  background: #fff; border: 1.5px solid #e5e7eb;
+  border-radius: var(--radius-sm);
+  font-family: 'Inter', sans-serif; font-size: .95rem; color: var(--dark);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  -webkit-appearance: none;
+}
+.form-group select option { background: #fff; }
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: #9ca3af; }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none; border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(45,122,58,.12);
+}
+.form-group textarea { resize: vertical; min-height: 110px; }
+
+.btn-submit {
+  width: 100%; padding: 16px;
+  background: var(--green); color: #fff;
+  font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600;
+  border: none; border-radius: 100px; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(45,122,58,.4);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  margin-top: 4px;
+}
+.btn-submit:hover { background: var(--green-mid); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(45,122,58,.5); }
+
+.form-footer-note { text-align: center; font-size: .75rem; color: #9ca3af; margin-top: 12px; }
+
+.success-state {
+  display: none; text-align: center; padding: 48px 20px;
+}
+.success-state .success-icon {
+  width: 64px; height: 64px; background: var(--green-light);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; margin: 0 auto 20px;
+}
+.success-state h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--dark); margin-bottom: 10px; }
+.success-state p  { font-size: .93rem; color: var(--gray); line-height: 1.7; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--dark2); color: rgba(255,255,255,.6);
+  padding: 64px 6% 36px;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.8fr 1fr 1fr;
+  gap: 48px; margin-bottom: 52px; padding-bottom: 52px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.footer-brand .nav-logo { margin-bottom: 16px; }
+.footer-brand p { font-size: .875rem; line-height: 1.7; max-width: 300px; color: rgba(255,255,255,.5); }
+
+.footer-col h4 {
+  font-size: .72rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: rgba(255,255,255,.35);
+  margin-bottom: 18px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a { font-size: .875rem; color: rgba(255,255,255,.55); transition: color var(--transition); }
+.footer-col ul li a:hover { color: #86efac; }
+.footer-col p  { font-size: .875rem; color: rgba(255,255,255,.55); line-height: 1.7; }
+.footer-col a  { color: rgba(255,255,255,.55); transition: color var(--transition); }
+.footer-col a:hover { color: #86efac; }
+
+.footer-bottom {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  justify-content: space-between; align-items: center;
+}
+.footer-bottom p { font-size: .78rem; color: rgba(255,255,255,.28); }
+.footer-stars { display: flex; align-items: center; gap: 5px; }
+.footer-stars .star { font-size: .85rem; }
+.footer-stars span { font-size: .78rem; color: rgba(255,255,255,.35); margin-left: 4px; }
+
+.back-top {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; background: rgba(255,255,255,.07);
+  border-radius: 50%; color: rgba(255,255,255,.5); font-size: 1rem;
+  transition: background var(--transition), color var(--transition);
+  cursor: pointer; border: none; margin-left: auto;
+}
+.back-top:hover { background: var(--green); color: #fff; }
+
+/* ─── SCROLL REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: .10s; }
+.reveal.d2 { transition-delay: .20s; }
+.reveal.d3 { transition-delay: .30s; }
+.reveal.d4 { transition-delay: .40s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .contact-wrap { grid-template-columns: 1fr; gap: 48px; }
+}
+@media (max-width: 640px) {
+  .section { padding: 72px 5%; }
+  .hero { padding: 100px 5% 70px; }
+  .hero-btns { flex-direction: column; align-items: center; margin-bottom: 72px; }
+  .hero-btns a, .hero-btns button { width: 100%; max-width: 320px; justify-content: center; }
+  .form-row { grid-template-columns: 1fr; }
+  .contact-form-wrap { padding: 28px 22px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.15); }
+  .stat-item:last-child { border-bottom: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">🌿</div>
+    BRY Landscaping LLC&nbsp;·&nbsp;NE Ohio
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:4405709878" class="nav-cta">📞 (440) 570-9878</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" id="closeMenu" aria-label="Close">✕</button>
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#why" class="mobile-link">Why Us</a>
+  <a href="#reviews" class="mobile-link">Reviews</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <a href="tel:4405709878" class="mobile-cta-phone">📞 (440) 570-9878</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-texture"></div>
+  <div class="hero-sweep"></div>
+  <div class="leaf-particles" id="leafParticles"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge reveal">
+      <span class="badge-dot"></span>
+      5.0 Stars · Northeast Ohio, OH
+    </div>
+    <h1 class="reveal d1">Your Dream Lawn,<br><em>Delivered.</em></h1>
+    <p class="hero-sub reveal d2">
+      Northeast Ohio's trusted lawn and landscape crew. Reliable, hardworking, and always going the extra mile — from first cut to full transformation.
+    </p>
+    <div class="hero-btns reveal d3">
+      <a href="#contact" class="btn-green">Get a Free Quote →</a>
+      <a href="tel:4405709878" class="btn-ghost">📞 Call Now</a>
+    </div>
+    <div class="scroll-hint reveal d4">
+      <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BAR ═══ -->
+<div class="stats-bar">
+  <div class="stat-item reveal"><span class="stat-num">5.0★</span><span class="stat-label">Google Rating</span></div>
+  <div class="stat-item reveal d1"><span class="stat-num">6</span><span class="stat-label">Reviews</span></div>
+  <div class="stat-item reveal d2"><span class="stat-num">100%</span><span class="stat-label">Satisfaction</span></div>
+  <div class="stat-item reveal d3"><span class="stat-num">Free</span><span class="stat-label">Estimates</span></div>
+</div>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="section section-light" id="services">
+  <div class="section-header centered reveal">
+    <span class="eyebrow">What We Do</span>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-sub">From weekly lawn care to full yard transformations — Bryan and his crew handle every detail with professionalism and pride.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="svc-icon">🌿</span>
+      <h3>Lawn Mowing &amp; Maintenance</h3>
+      <p>Consistent, professional mowing and year-round upkeep to keep your lawn looking pristine every single season.</p>
+    </div>
+    <div class="service-card reveal d1">
+      <span class="svc-icon">🌱</span>
+      <h3>Grass Seeding</h3>
+      <p>Expert seeding to fill bare spots, thicken thin turf, and give you the full, lush lawn you deserve.</p>
+    </div>
+    <div class="service-card reveal d2">
+      <span class="svc-icon">🪴</span>
+      <h3>Landscape Design</h3>
+      <p>Thoughtful layouts that bring structure, beauty, and real value to your outdoor living space.</p>
+    </div>
+    <div class="service-card reveal d3">
+      <span class="svc-icon">🍂</span>
+      <h3>Mulching</h3>
+      <p>Fresh mulch that suppresses weeds, locks in moisture, and gives your beds a clean, polished finish.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="svc-icon">🌾</span>
+      <h3>Weed Control</h3>
+      <p>Targeted treatments to eliminate existing weeds and protect your lawn and beds all season long.</p>
+    </div>
+    <div class="service-card reveal d1">
+      <span class="svc-icon">🌸</span>
+      <h3>Garden Work</h3>
+      <p>Beautiful planting, clearing, and seasonal maintenance to elevate and enhance your outdoor space.</p>
+    </div>
+    <div class="service-card reveal d2">
+      <span class="svc-icon">✂️</span>
+      <h3>Edging &amp; Trimming</h3>
+      <p>Crisp, clean edges and detail trimming that tie the whole look of your yard together perfectly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY US ═══ -->
+<section class="section section-dark" id="why">
+  <div class="section-header centered reveal" style="margin:0 auto 60px;">
+    <span class="eyebrow">Why Choose Us</span>
+    <h2 class="section-title">The BRY Difference</h2>
+    <p class="section-sub">We're not just another lawn company. We're your Northeast Ohio neighbors, and we treat every yard like our own.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-icon-wrap">5.0★</div>
+      <h3>Perfect Rating</h3>
+      <p>Every single Google review is five stars — real Northeast Ohio homeowners who trust Bryan to show up and deliver.</p>
+    </div>
+    <div class="why-card reveal d1">
+      <div class="why-icon-wrap">🏠</div>
+      <h3>Locally Owned</h3>
+      <p>No call centers, no franchises. Just Bryan and his crew, personally invested in making your lawn the best on the block.</p>
+    </div>
+    <div class="why-card reveal d2">
+      <div class="why-icon-wrap">$0</div>
+      <h3>Free Estimates</h3>
+      <p>Transparent pricing, no hidden fees — ever. Get a detailed, no-obligation quote before any work begins.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REVIEWS ═══ -->
+<section class="section section-pale" id="reviews">
+  <div class="section-header centered reveal" style="margin:0 auto 60px;">
+    <span class="eyebrow" style="color:var(--green)">What Clients Say</span>
+    <h2 class="section-title">Real Reviews, Real Results</h2>
+    <p class="section-sub" style="color:var(--gray); margin-left:auto; margin-right:auto;">Don't take our word for it — hear directly from Northeast Ohio homeowners who've seen the BRY difference.</p>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="review-quote">"</div>
+      <div class="review-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-body">Excellent service and very responsible with their work!</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">CM</div>
+        <div>
+          <div class="reviewer-name">Chris Mel</div>
+          <div class="reviewer-badge">Local Guide</div>
+        </div>
+      </div>
+      <div class="google-row"><div class="g-circle"></div> Verified Google Review</div>
+    </div>
+    <div class="review-card reveal d1">
+      <div class="review-quote">"</div>
+      <div class="review-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-body">Great job. Bryan really went the extra mile. Fair price and great work. I will be calling them back again in the fall.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">JF</div>
+        <div>
+          <div class="reviewer-name">Jim Fanta</div>
+          <div class="reviewer-badge">Google Review</div>
+        </div>
+      </div>
+      <div class="google-row"><div class="g-circle"></div> Verified Google Review</div>
+    </div>
+    <div class="review-card reveal d2">
+      <div class="review-quote">"</div>
+      <div class="review-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-body">Great reliable work. Very pleased with all aspects of job. Will definitely have Bry Landscaping back. The work was exceptional. I'm so happy with the work. Thank you.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">KT</div>
+        <div>
+          <div class="reviewer-name">Kitty Takacs</div>
+          <div class="reviewer-badge">Google Review</div>
+        </div>
+      </div>
+      <div class="google-row"><div class="g-circle"></div> Verified Google Review</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section class="section section-light" id="contact">
+  <div class="contact-wrap">
+    <div class="contact-left reveal">
+      <span class="eyebrow">Get In Touch</span>
+      <h2>Request a <em>Free Quote</em></h2>
+      <p>Ready to transform your outdoor space? Fill out the form or give us a call — Bryan will get back to you quickly with a personalized, no-obligation quote.</p>
+      <div class="contact-detail-row">
+        <div class="cdr-icon">📞</div>
+        <div class="cdr-text">
+          <strong>Phone</strong>
+          <span><a href="tel:4405709878">(440) 570-9878</a></span>
+        </div>
+      </div>
+      <div class="contact-detail-row">
+        <div class="cdr-icon">📍</div>
+        <div class="cdr-text">
+          <strong>Location</strong>
+          <span>Northeast Ohio Area</span>
+        </div>
+      </div>
+      <div class="contact-detail-row">
+        <div class="cdr-icon">🕘</div>
+        <div class="cdr-text">
+          <strong>Hours</strong>
+          <span>Mon–Sat: 7am–7pm</span>
+        </div>
+      </div>
+      <div class="contact-detail-row">
+        <div class="cdr-icon">⭐</div>
+        <div class="cdr-text">
+          <strong>Rating</strong>
+          <span>5.0 Stars · 6 Google Reviews</span>
+        </div>
+      </div>
+      <div class="contact-detail-row">
+        <div class="cdr-icon">🌱</div>
+        <div class="cdr-text">
+          <strong>About</strong>
+          <span>Locally Owned &amp; Operated</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap reveal d2">
+      <div id="formBody">
+        <h3 class="form-title">Send a Message</h3>
+        <p class="form-note-top">We'll respond within a few hours.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="John">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Smith">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="(440) 000-0000">
+        </div>
+        <div class="form-group">
+          <label>Service Needed</label>
+          <select>
+            <option value="" disabled selected>Select a service…</option>
+            <option>Lawn Mowing &amp; Maintenance</option>
+            <option>Grass Seeding</option>
+            <option>Landscape Design</option>
+            <option>Mulching</option>
+            <option>Weed Control</option>
+            <option>Garden Work</option>
+            <option>Edging &amp; Trimming</option>
+            <option>Multiple / Not Sure</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us about your property and what you need…"></textarea>
+        </div>
+        <button class="btn-submit" onclick="handleSubmit(event)">Send Message →</button>
+        <p class="form-footer-note">No spam, ever. We'll only use your info to respond to your request.</p>
+      </div>
+      <div class="success-state" id="successState">
+        <div class="success-icon">✅</div>
+        <h3>Message Sent!</h3>
+        <p>Thanks! Bryan will be in touch shortly with your free, personalized quote.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo" style="display:flex;">
+        <div class="nav-logo-icon">🌿</div>
+        &nbsp;BRY Landscaping LLC
+      </div>
+      <p>Providing exceptional, reliable lawn and landscape care for Northeast Ohio. Building lasting relationships, one yard at a time.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Lawn Mowing</a></li>
+        <li><a href="#services">Grass Seeding</a></li>
+        <li><a href="#services">Landscape Design</a></li>
+        <li><a href="#services">Mulching</a></li>
+        <li><a href="#services">Weed Control</a></li>
+        <li><a href="#services">Garden Work</a></li>
+        <li><a href="#services">Edging &amp; Trimming</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#why">About Us</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#contact">Free Quote</a></li>
+        <li><a href="tel:4405709878">Call Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 BRY Landscaping LLC. All rights reserved. · Northeast Ohio, OH</p>
+    <div class="footer-stars">
+      <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      <span>5.0 · Northeast Ohio, OH</span>
+    </div>
+    <button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+  </div>
+</footer>
+
+<script>
+/* ── Leaf particles ── */
+(function(){
+  var c = document.getElementById('leafParticles');
+  var emojis = ['🌿','🍃','🌱','🍀','🌾'];
+  for(var i=0;i<22;i++){
+    var el = document.createElement('div');
+    el.className='lp';
+    el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.left = Math.random()*100+'%';
+    el.style.setProperty('--dur',(12+Math.random()*14)+'s');
+    el.style.setProperty('--del',(Math.random()*12)+'s');
+    el.style.fontSize = (.7+Math.random()*.9)+'rem';
+    c.appendChild(el);
+  }
+})();
+
+/* ── Navbar scroll ── */
+window.addEventListener('scroll',function(){
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+},{passive:true});
+
+/* ── Mobile menu ── */
+document.getElementById('hamburger').addEventListener('click',function(){
+  document.getElementById('mobileMenu').classList.add('open');
+});
+document.getElementById('closeMenu').addEventListener('click',function(){
+  document.getElementById('mobileMenu').classList.remove('open');
+});
+document.querySelectorAll('.mobile-link,.mobile-cta-phone').forEach(function(a){
+  a.addEventListener('click',function(){
+    document.getElementById('mobileMenu').classList.remove('open');
+  });
+});
+
+/* ── Scroll reveal ── */
+var reveals = document.querySelectorAll('.reveal');
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting) e.target.classList.add('in');
+  });
+},{threshold:0.10,rootMargin:'0px 0px -36px 0px'});
+reveals.forEach(function(el){ io.observe(el); });
+
+/* Hero reveals on load */
+document.querySelectorAll('.hero .reveal, .stats-bar .reveal').forEach(function(el,i){
+  setTimeout(function(){ el.classList.add('in'); }, 120+i*150);
+});
+
+/* ── Smooth scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+/* ── Form ── */
+function handleSubmit(e){
+  e.preventDefault();
+  var btn=e.target; btn.textContent='Sending…'; btn.style.opacity='.7';
+  setTimeout(function(){
+    document.getElementById('formBody').style.display='none';
+    document.getElementById('successState').style.display='block';
+  },1100);
+}
+</script>
+</body>
+</html>
